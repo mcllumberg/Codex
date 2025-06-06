@@ -23,7 +23,7 @@ CLASS zcl_zhr_birthday DEFINITION public.
           mv_pendda TYPE sy-datum.
 ENDCLASS.
 
-CLASS zcl_zhr_birthday. IMPLEMENTATION.
+CLASS zcl_zhr_birthday IMPLEMENTATION.
 
   METHOD constructor.
     mv_pbegda = i_pbegda.

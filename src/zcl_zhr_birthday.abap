@@ -1,4 +1,4 @@
-CLASS lcl_birthday DEFINITION.
+CLASS zcl_zhr_birthday DEFINITION.
   PUBLIC SECTION.
     METHODS: constructor
                IMPORTING i_pbegda TYPE sy-datum
@@ -22,7 +22,7 @@ CLASS lcl_birthday DEFINITION.
           mv_pendda TYPE sy-datum.
 ENDCLASS.
 
-CLASS lcl_birthday IMPLEMENTATION.
+CLASS zcl_zhr_birthday IMPLEMENTATION.
 
   METHOD constructor.
     mv_pbegda = i_pbegda.

@@ -3,7 +3,8 @@ CLASS lcl_birthday DEFINITION.
     METHODS: constructor
                IMPORTING i_pbegda TYPE sy-datum
                          i_pendda TYPE sy-datum,
-             process_pernr,
+             process_pernr
+               IMPORTING is_p0002 TYPE p0002,
              display_alv,
              send_email.
 
@@ -31,19 +32,22 @@ CLASS lcl_birthday IMPLEMENTATION.
 
   METHOD process_pernr.
     DATA: wa_hrp1000 TYPE hrp1000,
-          wa_hrp1001 TYPE hrp1001.
+          wa_hrp1001 TYPE hrp1001,
+          lt_hrp1001 TYPE TABLE OF hrp1001,
+          lt_hrp1000 TYPE TABLE OF hrp1000.
 
-    CHECK p0002-gbdat GE mv_pbegda AND p0002-gbdat LE mv_pendda.
+    CHECK is_p0002-gbdat GE mv_pbegda AND
+          is_p0002-gbdat LE mv_pendda.
 
     CALL FUNCTION 'RH_READ_INFTY'
       EXPORTING
-        pernr               = pernr-pernr
+        pernr               = is_p0002-pernr
         infty               = '1001'
         subty               = 'A003'
         begda               = sy-datum
         endda               = sy-datum
       TABLES
-        infty_tab           = TABLE_OF_hrp1001
+        infty_tab           = lt_hrp1001
       EXCEPTIONS
         nothing_found       = 1
         wrong_condition     = 2
@@ -52,7 +56,7 @@ CLASS lcl_birthday IMPLEMENTATION.
       EXIT.
     ENDIF.
 
-    READ TABLE TABLE_OF_hrp1001 INDEX 1 INTO wa_hrp1001.
+    READ TABLE lt_hrp1001 INDEX 1 INTO wa_hrp1001.
     IF sy-subrc <> 0.
       EXIT.
     ENDIF.
@@ -66,7 +70,7 @@ CLASS lcl_birthday IMPLEMENTATION.
         begda               = sy-datum
         endda               = sy-datum
       TABLES
-        infty_tab           = TABLE_OF_hrp1000
+        infty_tab           = lt_hrp1000
       EXCEPTIONS
         nothing_found       = 1
         wrong_condition     = 2
@@ -75,16 +79,16 @@ CLASS lcl_birthday IMPLEMENTATION.
       EXIT.
     ENDIF.
 
-    READ TABLE TABLE_OF_hrp1000 INDEX 1 INTO wa_hrp1000.
+    READ TABLE lt_hrp1000 INDEX 1 INTO wa_hrp1000.
     IF sy-subrc <> 0.
       EXIT.
     ENDIF.
 
     CLEAR ms_pernr.
-    ms_pernr-pernr = pernr-pernr.
-    ms_pernr-vorna = p0002-vorna.
-    ms_pernr-nachn = p0002-nachn.
-    ms_pernr-gbdat = p0002-gbdat.
+    ms_pernr-pernr = is_p0002-pernr.
+    ms_pernr-vorna = is_p0002-vorna.
+    ms_pernr-nachn = is_p0002-nachn.
+    ms_pernr-gbdat = is_p0002-gbdat.
     ms_pernr-plans = wa_hrp1001-objid.
     ms_pernr-orgtx = wa_hrp1000-sgtext.
     APPEND ms_pernr TO mt_pernrs.

@@ -27,7 +27,9 @@ START-OF-SELECTION.
       i_pendda = p_endda.
 
 GET pernr.
-  go_bday->process_pernr( ).
+  CALL METHOD go_bday->process_pernr
+    EXPORTING
+      is_p0002 = p0002.
 
 END-OF-SELECTION.
   go_bday->display_alv( ).

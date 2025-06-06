@@ -14,8 +14,8 @@ CLASS lcl_birthday DEFINITION public.
              vorna TYPE p0002-vorna,
              nachn TYPE p0002-nachn,
              gbdat TYPE p0002-gbdat,
-             plans TYPE hrp1001-plans,
-             orgtx TYPE hrp1000-sgtext,
+             plans TYPE p0001-plans,
+             orgtx TYPE hrp1000-stext,
            END OF ty_pernr.
     DATA: mt_pernrs TYPE STANDARD TABLE OF ty_pernr,
           ms_pernr TYPE ty_pernr,

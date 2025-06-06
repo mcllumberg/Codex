@@ -1,4 +1,4 @@
-CLASS lcl_birthday DEFINITION.
+CLASS lcl_birthday DEFINITION public.
   PUBLIC SECTION.
     METHODS: constructor
                IMPORTING i_pbegda TYPE sy-datum

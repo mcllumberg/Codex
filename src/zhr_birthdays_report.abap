@@ -13,8 +13,6 @@ TABLES: pernr.
 NODES:  pernr.
 INFOTYPES: 0001, 0002.
 
-INCLUDE zcl_birthday_class.
-
 PARAMETERS: p_begda TYPE sy-datum DEFAULT sy-datum,
             p_endda TYPE sy-datum DEFAULT sy-datum.
 
